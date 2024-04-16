@@ -1,4 +1,5 @@
-import javax.persistence.*;
+package com.example.Rowdyback.model;
+import jakarta.persistence.*;
 
 @Entity
 public class ShoppingCart {

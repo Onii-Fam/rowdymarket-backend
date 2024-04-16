@@ -1,4 +1,7 @@
-import javax.persistence.*;
+package com.example.Rowdyback.model;
+import jakarta.persistence.*;
+import com.example.Rowdyback.model.User;
+
 import java.time.LocalDateTime;
 
 @Entity

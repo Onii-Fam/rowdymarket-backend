@@ -1,6 +1,6 @@
-package com.example.Rowdyback.services;
+package com.example.Rowdyback.service;
 
-import com.example.Rowdyback.models.User;
+import com.example.Rowdyback.model.User;
 import com.example.Rowdyback.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,6 +51,6 @@ public class UserService {
     }
 
     public Optional<User> findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return Optional.ofNullable(userRepository.findByUsername(username));
     }
 }

@@ -1,9 +1,12 @@
-package com.example.Rowdyback.services;
+package com.example.Rowdyback.service;
 
-import com.example.Rowdyback.models.Item;
+import com.example.Rowdyback.model.Item;
 import com.example.Rowdyback.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemService {

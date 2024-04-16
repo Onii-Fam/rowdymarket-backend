@@ -9,5 +9,4 @@ public class RowdybackApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RowdybackApplication.class, args);
 	}
-
 }

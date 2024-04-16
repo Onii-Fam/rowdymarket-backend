@@ -12,8 +12,12 @@ import java.util.List;
 @RequestMapping("/api/orders")
 public class OrderController {
 
+    private final OrderService orderService;
+
     @Autowired
-    private OrderService orderService;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
@@ -35,8 +39,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
-        Order updatedOrder = orderService.updateOrder(id, order);
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order orderDetails) {
+        Order updatedOrder = orderService.updateOrder(id, orderDetails);
         return ResponseEntity.ok(updatedOrder);
     }
 
@@ -46,5 +50,6 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    // TODO: additional endpoints for order management, etc.
+    //TODO: Additional endpoints
+
 }
