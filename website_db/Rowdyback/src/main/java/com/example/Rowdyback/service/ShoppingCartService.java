@@ -33,22 +33,19 @@ public class ShoppingCartService {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found with id: " + itemId));
 
-        ShoppingCart cart = shoppingCartRepository.findByUserId(userId)
+        ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElse(new ShoppingCart(user));
 
-        // Implement the logic to add the item to the cart
-        // This might involve checking if the item is already in the cart and increasing the quantity
-        // cart.addItem(item, quantity); // Example method, implement in ShoppingCart class
+        // Add item logic here
+        cart.addItem(item); // Assuming item adding logic is handled internally
 
-        // Update the cart total
         cart.setTotalAmount(calculateCartTotal(cart));
-
         return shoppingCartRepository.save(cart);
     }
 
     // Method to remove an item from the cart
     public ShoppingCart removeItemFromCart(Long userId, Long itemId) {
-        ShoppingCart cart = shoppingCartRepository.findByUserId(userId)
+        ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
         // Implement the logic to remove the item from the cart
@@ -59,7 +56,7 @@ public class ShoppingCartService {
 
     // Method to update the quantity of an item in the cart
     public ShoppingCart updateItemQuantity(Long userId, Long itemId, int quantity) {
-        ShoppingCart cart = shoppingCartRepository.findByUserId(userId)
+        ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
         // Implement the logic to update the item quantity in the cart
@@ -70,16 +67,16 @@ public class ShoppingCartService {
 
     // Method to get the cart for a user
     public Optional<ShoppingCart> getCartForUser(Long userId) {
-        return shoppingCartRepository.findByUserId(userId);
+        return shoppingCartRepository.findByUserUserId(userId);
     }
 
     // Method to clear the cart
     public void clearCart(Long userId) {
-        ShoppingCart cart = shoppingCartRepository.findByUserId(userId)
+        ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
-        // Implement the logic to clear the cart
-        // cart.clearItems(); // Example method, implement in ShoppingCart class
+        // Clearing logic here
+        cart.clearItems(); // Assuming you implement a clearItems method
 
         shoppingCartRepository.save(cart);
     }

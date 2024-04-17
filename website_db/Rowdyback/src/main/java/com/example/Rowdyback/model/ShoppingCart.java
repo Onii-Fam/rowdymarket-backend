@@ -1,40 +1,35 @@
 package com.example.Rowdyback.model;
 import jakarta.persistence.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
+
     @ManyToOne
     private User user;
+
+    @ElementCollection
+    @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
+    @Column(name = "item_id")
+    private Set<Long> itemIds = new HashSet<>();
+
     private Double totalAmount;
     private Double taxAmount;
     private String discountCode;
 
-    private HashMap<Long, Item> shoppingCart;
-
-    public ShoppingCart() {shoppingCart = new HashMap<>();}
-
-    public ShoppingCart(User user, Double totalAmount, Double taxAmount, String discountCode) {
-        this.user = user;
-        this.totalAmount = totalAmount;
-        this.taxAmount = taxAmount;
-        this.discountCode = discountCode;
-        shoppingCart = new HashMap<>();
-    }
+    public ShoppingCart() {}
 
     public ShoppingCart(User user) {
         this.user = user;
-        // Initialize the other fields with default values or as per business logic
         this.totalAmount = 0.0;
         this.taxAmount = 0.0;
         this.discountCode = "";
     }
-
 
     // Getters
     public Long getCartId() { return cartId; }
@@ -42,6 +37,7 @@ public class ShoppingCart {
     public Double getTotalAmount() { return totalAmount; }
     public Double getTaxAmount() { return taxAmount; }
     public String getDiscountCode() { return discountCode; }
+    public Set<Long> getItemIds() { return itemIds; }
 
     // Setters
     public void setCartId(Long cartId) { this.cartId = cartId; }
@@ -49,13 +45,18 @@ public class ShoppingCart {
     public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
     public void setTaxAmount(Double taxAmount) { this.taxAmount = taxAmount; }
     public void setDiscountCode(String discountCode) { this.discountCode = discountCode; }
+    public void setItemIds(Set<Long> itemIds) { this.itemIds = itemIds; }
 
+    // Operations
     public void addItem(Item item) {
-        shoppingCart.put(item.getItemId(), item);
+        itemIds.add(item.getItemId());
     }
+
     public void removeItem(Item item) {
-        shoppingCart.remove(item.getItemId());
+        itemIds.remove(item.getItemId());
     }
 
+    public void clearItems() {
+        itemIds.clear();
+    }
 }
-
