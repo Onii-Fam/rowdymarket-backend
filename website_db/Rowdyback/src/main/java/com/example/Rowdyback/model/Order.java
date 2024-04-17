@@ -1,7 +1,6 @@
 package com.example.Rowdyback.model;
-import jakarta.persistence.*;
-import com.example.Rowdyback.model.User;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,15 +8,18 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
+
     @ManyToOne
+    @JoinColumn(name = "user_id")  // Explicitly defining the column name for clarity
     private User user;
+
     private LocalDateTime orderDate;
     private Double totalAmount;
     private Double taxAmount;
     private String discountCode;
     private String orderStatus;
 
-    public Order() {}
+public Order() {}
 
     public Order(User user, LocalDateTime orderDate, Double totalAmount, Double taxAmount, String discountCode, String orderStatus) {
         this.user = user;
