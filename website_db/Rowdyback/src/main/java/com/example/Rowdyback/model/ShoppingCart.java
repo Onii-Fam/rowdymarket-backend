@@ -21,6 +21,15 @@ public class ShoppingCart {
         this.discountCode = discountCode;
     }
 
+    public ShoppingCart(User user) {
+        this.user = user;
+        // Initialize the other fields with default values or as per business logic
+        this.totalAmount = 0.0;
+        this.taxAmount = 0.0;
+        this.discountCode = "";
+    }
+
+
     // Getters
     public Long getCartId() { return cartId; }
     public User getUser() { return user; }
