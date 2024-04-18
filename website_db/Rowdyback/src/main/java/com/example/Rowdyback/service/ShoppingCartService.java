@@ -3,12 +3,14 @@ package com.example.Rowdyback.service;
 import com.example.Rowdyback.model.Item;
 import com.example.Rowdyback.model.ShoppingCart;
 import com.example.Rowdyback.model.User;
+import com.example.Rowdyback.model.CartItem;
 import com.example.Rowdyback.repositories.ItemRepository;
 import com.example.Rowdyback.repositories.ShoppingCartRepository;
 import com.example.Rowdyback.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
+import java.util.Map;
 
 @Service
 public class ShoppingCartService {
@@ -37,8 +39,8 @@ public class ShoppingCartService {
                 .orElse(new ShoppingCart(user));
 
         // Implement the logic to add the item to the cart
-        // This might involve checking if the item is already in the cart and increasing the quantity
-        // cart.addItem(item, quantity); // Example method, implement in ShoppingCart class
+        //This might involve checking if the item is already in the cart and increasing the quantity
+        cart.addItem(item, quantity);
 
         // Update the cart total
         cart.setTotalAmount(calculateCartTotal(cart));
@@ -51,8 +53,10 @@ public class ShoppingCartService {
         ShoppingCart cart = shoppingCartRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
+
+
         // Implement the logic to remove the item from the cart
-        // cart.removeItem(itemId); // Example method, implement in ShoppingCart class
+        cart.removeItem(itemId); // Example method, implement in ShoppingCart class
 
         return shoppingCartRepository.save(cart);
     }
@@ -63,7 +67,7 @@ public class ShoppingCartService {
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
         // Implement the logic to update the item quantity in the cart
-        // cart.updateItemQuantity(itemId, quantity); // Example method, implement in ShoppingCart class
+        cart.updateItemQuantity(itemId, quantity); // Example method, implement in ShoppingCart class
 
         return shoppingCartRepository.save(cart);
     }
@@ -79,7 +83,7 @@ public class ShoppingCartService {
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
         // Implement the logic to clear the cart
-        // cart.clearItems(); // Example method, implement in ShoppingCart class
+        cart.clearItems(); // Example method, implement in ShoppingCart class
 
         shoppingCartRepository.save(cart);
     }
@@ -88,9 +92,14 @@ public class ShoppingCartService {
     private Double calculateCartTotal(ShoppingCart cart) {
         // Implement the logic to calculate the total amount
         // This might involve summing the price*quantity of all items in the cart
-        double total = 0.0;
         // for each item in cart, do something like: total += item.getPrice() * item.getQuantity();
-        return total;
+        Double totalPrice=0.0;
+        Map<Long,CartItem> map = cart.getCartItems();
+
+        for (Map.Entry<Long, CartItem> items : map.entrySet()) {
+            totalPrice = totalPrice + (items.getValue().getItem().getPrice() * items.getValue().getQuantity());
+        }
+        return totalPrice;
     }
 
     // Add other necessary methods and logic as required.

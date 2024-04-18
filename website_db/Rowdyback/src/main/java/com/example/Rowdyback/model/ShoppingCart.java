@@ -15,7 +15,7 @@ public class ShoppingCart {
     private Double taxAmount;
     private String discountCode;
 
-    private HashMap<Long, Item> shoppingCart;
+    private HashMap<Long, CartItem> shoppingCart;
 
     public ShoppingCart() {shoppingCart = new HashMap<>();}
 
@@ -50,12 +50,54 @@ public class ShoppingCart {
     public void setTaxAmount(Double taxAmount) { this.taxAmount = taxAmount; }
     public void setDiscountCode(String discountCode) { this.discountCode = discountCode; }
 
-    public void addItem(Item item) {
-        shoppingCart.put(item.getItemId(), item);
+    public void updateItemQuantity(Long itemId, int quantity) {
+        CartItem c = shoppingCart.get(itemId);
+        if(c != null) {
+            int q = c.getQuantity();
+            c.setQuantity(q + quantity);
+            shoppingCart.put(itemId, c);
+        }
+    }
+    public void addItem(Item item, int quantity)
+    {
+        CartItem c = new CartItem(item,quantity);
+
+        CartItem i = shoppingCart.get(item.getItemId());
+        if(i == null) {
+            shoppingCart.put(c.getItem().getItemId(), c);
+        }
+        else {
+            updateItemQuantity(item.getItemId(), quantity);
+        }
+    }
+
+    public void removeItem(Long itemId)
+    {
+        CartItem i = shoppingCart.get(itemId);
+        if(i != null) {
+            if(i.getQuantity() == 1) {
+                shoppingCart.remove(itemId);
+            }
+            else {
+                if (i.getQuantity() > 1) {
+                    updateItemQuantity(itemId, -1);
+                }
+            }
+        }
     }
     public void removeItem(Item item) {
         shoppingCart.remove(item.getItemId());
     }
 
+    public Map<Long, CartItem> getCartItems() {
+        return shoppingCart;
+    }
+    public CartItem getCartItem(Long itemId) {
+        return shoppingCart.get(itemId);
+    }
+
+    public void clearItems() {
+        shoppingCart.clear();
+    }
 }
 
