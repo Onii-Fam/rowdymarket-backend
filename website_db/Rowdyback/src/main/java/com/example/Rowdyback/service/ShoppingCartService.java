@@ -38,8 +38,7 @@ public class ShoppingCartService {
         ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElse(new ShoppingCart(user));
 
-        // Add item logic here
-        cart.addItem(item); // Assuming item adding logic is handled internally
+        cart.addItem(item, quantity); // Handling item adding logic internally
 
         cart.setTotalAmount(calculateCartTotal(cart));
         return shoppingCartRepository.save(cart);
@@ -50,11 +49,9 @@ public class ShoppingCartService {
         ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
+        cart.removeItem(itemId);
 
-
-        // Implement the logic to remove the item from the cart
-        cart.removeItem(itemId); // Example method, implement in ShoppingCart class
-
+        cart.setTotalAmount(calculateCartTotal(cart));
         return shoppingCartRepository.save(cart);
     }
 
@@ -63,9 +60,9 @@ public class ShoppingCartService {
         ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
-        // Implement the logic to update the item quantity in the cart
-        cart.updateItemQuantity(itemId, quantity); // Example method, implement in ShoppingCart class
+        cart.updateItemQuantity(itemId, quantity);
 
+        cart.setTotalAmount(calculateCartTotal(cart));
         return shoppingCartRepository.save(cart);
     }
 
@@ -79,22 +76,18 @@ public class ShoppingCartService {
         ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found for user with id: " + userId));
 
-        // Clearing logic here
-        cart.clearItems(); // Assuming you implement a clearItems method
+        cart.clearItems();
 
         shoppingCartRepository.save(cart);
     }
 
     // Helper method to calculate the total amount of the cart
     private Double calculateCartTotal(ShoppingCart cart) {
-        // Implement the logic to calculate the total amount
-        // This might involve summing the price*quantity of all items in the cart
-        // for each item in cart, do something like: total += item.getPrice() * item.getQuantity();
-        Double totalPrice=0.0;
-        Map<Long,CartItem> map = cart.getCartItems();
+        Double totalPrice = 0.0;
+        Map<Long, CartItem> items = cart.getCartItems();
 
-        for (Map.Entry<Long, CartItem> items : map.entrySet()) {
-            totalPrice = totalPrice + (items.getValue().getItem().getPrice() * items.getValue().getQuantity());
+        for (CartItem item : items.values()) {
+            totalPrice += item.getItem().getPrice() * item.getQuantity();
         }
         return totalPrice;
     }
