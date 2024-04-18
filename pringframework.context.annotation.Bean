@@ -1,0 +1,91 @@
+[33mcommit 9079fba48c594698d797489d1716960f13a2afae[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 594db62 4e34464
+Author: Iain Summerlin <111240303+niceNiceiain2@users.noreply.github.com>
+Date:   Wed Apr 17 21:09:40 2024 -0500
+
+    Merge branch 'main' of https://github.com/Onii-Fam/rowdymarket-backend
+
+[33mcommit 594db621cdd3e76acd7eda30bd6265207023a212[m
+Author: Iain Summerlin <111240303+niceNiceiain2@users.noreply.github.com>
+Date:   Wed Apr 17 20:43:06 2024 -0500
+
+    Shopping cart updates.
+    
+    Added CartItem object and updated shopping cart logic.
+
+[33mcommit 4e34464bbe6ed83b8c2d89fe485c0a6ee26f37f9[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Wed Apr 17 17:16:25 2024 -0500
+
+    fixed shoppingcart functionality (real) this time
+
+[33mcommit 1a9674493d83fc292c011705a46702c71fff1957[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Wed Apr 17 15:06:48 2024 -0500
+
+    saving some changes to handle db issues
+
+[33mcommit 64bfb916afc2dcb21c5aeb193321412f2c3d186f[m
+Merge: d61714a 8bfefab
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Wed Apr 17 13:12:03 2024 -0500
+
+    Merge branch 'main' of https://github.com/Onii-Fam/rowdymarket-backend
+
+[33mcommit d61714aaf2f441bad0f18c74669431581094c444[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Wed Apr 17 13:11:40 2024 -0500
+
+    fixed shoppingcart functionality
+
+[33mcommit 8bfefab243a0fa4ee957f0308a5da4f5e2be2685[m
+Author: Iain Summerlin <111240303+niceNiceiain2@users.noreply.github.com>
+Date:   Tue Apr 16 21:18:18 2024 -0500
+
+    Update ShoppingCart.java
+    
+    Added a few methods and the shopping cart data structure.
+
+[33mcommit c4d265a458d266788620bc23d51244f90232f25b[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Tue Apr 16 19:18:58 2024 -0500
+
+    woops forgot Cart service
+
+[33mcommit 0edfd46d44a4dc3375e99bfc203625a3b7d2ebc3[m
+Author: Onii-Fam <144397692+Onii-Fam@users.noreply.github.com>
+Date:   Tue Apr 16 17:05:00 2024 -0500
+
+    Create README.md
+    
+    instructions on how to use the backend api
+
+[33mcommit 9ce53c2cbd76829f102172712461959ef801d877[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Tue Apr 16 17:03:50 2024 -0500
+
+    adjust BACKEND.md
+
+[33mcommit f6864ccc06241921329d5e6978ff666db39fb9e6[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Tue Apr 16 16:47:50 2024 -0500
+
+    fixed dependencies in gradle build
+
+[33mcommit d1a678dcf82e38f942e0bbfc2422512b62c37d4f[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Tue Apr 16 16:41:08 2024 -0500
+
+    Made changes to functionality as well as fixed some dependencies
+
+[33mcommit ab301e61f71cdfea8fd2b5542fb1c3dff36866f7[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Tue Apr 16 15:46:05 2024 -0500
+
+    Controllers, api endpoints, and interfaces
+
+[33mcommit 7e8d3db59ab7e01c4ce5e755e072c9eb314f934a[m
+Author: Alfonso <hipstercatz@gmail.com>
+Date:   Fri Apr 12 09:57:02 2024 -0500
+
+    initial
