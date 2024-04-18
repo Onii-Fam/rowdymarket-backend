@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
     // In ShoppingCartRepository
-    Optional<ShoppingCart> findByUserId(Long userId);
+    Optional<ShoppingCart> findByUserUserId(Long userId);
 
 
     // TODO: additional custom queries can be added here

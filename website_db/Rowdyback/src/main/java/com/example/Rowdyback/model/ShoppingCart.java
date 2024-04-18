@@ -1,16 +1,22 @@
 package com.example.Rowdyback.model;
 import jakarta.persistence.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
+
     @ManyToOne
     private User user;
+
+    @ElementCollection
+    @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
+    @Column(name = "item_id")
+    private Set<Long> itemIds = new HashSet<>();
+
     private Double totalAmount;
     private Double taxAmount;
     private String discountCode;
@@ -29,12 +35,11 @@ public class ShoppingCart {
 
     public ShoppingCart(User user) {
         this.user = user;
-        // Initialize the other fields with default values or as per business logic
         this.totalAmount = 0.0;
         this.taxAmount = 0.0;
         this.discountCode = "";
+        shoppingCart = new HashMap<>();
     }
-
 
     // Getters
     public Long getCartId() { return cartId; }
@@ -42,6 +47,7 @@ public class ShoppingCart {
     public Double getTotalAmount() { return totalAmount; }
     public Double getTaxAmount() { return taxAmount; }
     public String getDiscountCode() { return discountCode; }
+    public Set<Long> getItemIds() { return itemIds; }
 
     // Setters
     public void setCartId(Long cartId) { this.cartId = cartId; }
@@ -49,6 +55,7 @@ public class ShoppingCart {
     public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
     public void setTaxAmount(Double taxAmount) { this.taxAmount = taxAmount; }
     public void setDiscountCode(String discountCode) { this.discountCode = discountCode; }
+    public void setItemIds(Set<Long> itemIds) { this.itemIds = itemIds; }
 
     public void updateItemQuantity(Long itemId, int quantity) {
         CartItem c = shoppingCart.get(itemId);
@@ -71,22 +78,26 @@ public class ShoppingCart {
         }
     }
 
-    public void removeItem(Long itemId)
-    {
+    public void removeItem(Long itemId) {
         CartItem i = shoppingCart.get(itemId);
-        if(i != null) {
-            if(i.getQuantity() == 1) {
+        if (i != null) {
+            if (i.getQuantity() == 1) {
                 shoppingCart.remove(itemId);
-            }
-            else {
+            } else {
                 if (i.getQuantity() > 1) {
                     updateItemQuantity(itemId, -1);
                 }
             }
         }
     }
+
+    // Operations
+    public void addItem(Item item) {
+        this.addItem(item, 1);
+    }
+
     public void removeItem(Item item) {
-        shoppingCart.remove(item.getItemId());
+        this.removeItem(item.getItemId());
     }
 
     public Map<Long, CartItem> getCartItems() {
@@ -100,4 +111,3 @@ public class ShoppingCart {
         shoppingCart.clear();
     }
 }
-
