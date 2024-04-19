@@ -3,6 +3,7 @@ package com.example.Rowdyback.service;
 import com.example.Rowdyback.model.Order;
 import com.example.Rowdyback.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +36,10 @@ public class OrderService {
     // Retrieve all orders
     public List<Order> findAllOrders() {
         return orderRepository.findAll();
+    }
+
+    public List<Order> findAllOrders(Sort sort) {
+        return orderRepository.findAll(sort);
     }
 
     // Update an existing order by ID

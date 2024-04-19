@@ -26,10 +26,10 @@ public class ShoppingCart {
 
     public ShoppingCart() {shoppingCart = new HashMap<>();}
 
-    public ShoppingCart(User user, Double totalAmount, Double taxAmount, String discountCode) {
+    public ShoppingCart(User user, Double totalAmount, String discountCode) {
         this.user = user;
         this.totalAmount = totalAmount;
-        this.taxAmount = taxAmount;
+        this.taxAmount = 0.0825;
         this.discountCode = discountCode;
         shoppingCart = new HashMap<>();
     }

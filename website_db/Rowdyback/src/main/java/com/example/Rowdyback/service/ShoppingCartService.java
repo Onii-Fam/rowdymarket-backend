@@ -89,7 +89,7 @@ public class ShoppingCartService {
         for (CartItem item : items.values()) {
             totalPrice += item.getItem().getPrice() * item.getQuantity();
         }
-        return totalPrice;
+        return totalPrice*1.0825;
     }
 
     // Add other necessary methods and logic as required.
