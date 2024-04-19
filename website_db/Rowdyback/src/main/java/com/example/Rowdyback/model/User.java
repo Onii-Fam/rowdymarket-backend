@@ -2,6 +2,7 @@ package com.example.Rowdyback.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

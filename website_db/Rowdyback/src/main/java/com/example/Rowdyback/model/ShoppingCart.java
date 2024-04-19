@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
+@Table(name = "ShoppingCarts")
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
