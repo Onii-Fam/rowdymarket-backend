@@ -25,4 +25,6 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     // Using a custom query with sorting parameters
     @Query("SELECT i FROM Item i")
     List<Item> findAllItemsSorted(Sort sort);
+
+    List<Item> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description);
 }

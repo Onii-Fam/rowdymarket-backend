@@ -57,11 +57,17 @@ public class ItemService {
         return itemRepository.findAll(sort);
     }
 
-public List<Item> getItemsSortedByPriceAsc() {
-    return itemRepository.findAll(Sort.by("price").ascending());
-}
+    public List<Item> getItemsSortedByPriceAsc() {
+        return itemRepository.findAll(Sort.by("price").ascending());
+    }
 
     public List<Item> getItemsSortedByPriceDesc() {
         return itemRepository.findAll(Sort.by("price").descending());
     }
+
+    public List<Item> searchItemsByString(String search) {
+        return itemRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(search, search);
+    }
 }
+
+

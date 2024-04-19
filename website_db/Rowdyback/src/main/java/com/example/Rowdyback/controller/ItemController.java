@@ -2,6 +2,7 @@ package com.example.Rowdyback.controller;
 
 import com.example.Rowdyback.model.Item;
 import com.example.Rowdyback.service.ItemService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,5 +66,19 @@ public class ItemController {
     public ResponseEntity<List<Item>> getAllItemsSorted(boolean asc) {
         List<Item> items = asc ? itemService.getItemsSortedByPriceAsc() : itemService.getItemsSortedByPriceDesc();
         return ResponseEntity.ok(items);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchItems(@RequestParam(required = false) String query) {
+        if (query == null || query.isEmpty()) {
+            return ResponseEntity.badRequest().body("Error: Search query cannot be empty.");
+        } else {
+            List<Item> foundItems = itemService.searchItemsByString(query);
+            if (foundItems.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: No items found matching your search criteria.");
+            } else {
+                return ResponseEntity.ok(foundItems);
+            }
+        }
     }
 }
