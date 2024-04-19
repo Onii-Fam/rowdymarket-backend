@@ -61,8 +61,7 @@ public class ItemController {
         }
     }
 
-    // Assuming your ItemService has this method implemented
-    // Modify the method as per your ItemService's actual implementation
+
     public ResponseEntity<List<Item>> getAllItemsSorted(boolean asc) {
         List<Item> items = asc ? itemService.getItemsSortedByPriceAsc() : itemService.getItemsSortedByPriceDesc();
         return ResponseEntity.ok(items);
