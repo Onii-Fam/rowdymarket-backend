@@ -82,7 +82,7 @@ public class ShoppingCartService {
     }
 
     // Helper method to calculate the total amount of the cart
-    private Double calculateCartTotal(ShoppingCart cart) {
+    public Double calculateCartTotal(ShoppingCart cart) {
         Double totalPrice = 0.0;
         Map<Long, CartItem> items = cart.getCartItems();
 

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/Cart")
 public class ShoppingCartController {
@@ -37,4 +39,15 @@ public class ShoppingCartController {
         shoppingCartService.clearCart(userId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/total/{userId}")
+    public ResponseEntity<Double> getCartTotal(@PathVariable Long userId) {
+        Optional<ShoppingCart> cart = shoppingCartService.getCartForUser(userId);
+        return cart.map(shoppingCart -> {
+            Double total = shoppingCartService.calculateCartTotal(shoppingCart);
+            return ResponseEntity.ok(total);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 }

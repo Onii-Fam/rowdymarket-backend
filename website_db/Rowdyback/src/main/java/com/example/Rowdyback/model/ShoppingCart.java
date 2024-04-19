@@ -36,7 +36,7 @@ public class ShoppingCart {
 
     public ShoppingCart(User user) {
         this.user = user;
-        this.totalAmount = 0.0;
+        this.totalAmount = 1.0;
         this.taxAmount = 0.0;
         this.discountCode = "";
         shoppingCart = new HashMap<>();
