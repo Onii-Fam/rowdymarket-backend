@@ -67,9 +67,8 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    // Retrieve orders by user ID
     public List<Order> findOrdersByUserId(Long userId) {
-        return orderRepository.findByUserUserId(userId);
+        return orderRepository.findByUserId(userId);
     }
 
     // Retrieve orders by status

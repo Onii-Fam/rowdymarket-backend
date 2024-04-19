@@ -71,5 +71,14 @@ public class OrderController {
     }
 
     //TODO: Additional endpoints
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable Long userId) {
+        List<Order> orders = orderService.findOrdersByUserId(userId);
+        if(orders.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(orders);
+    }
+
 
 }

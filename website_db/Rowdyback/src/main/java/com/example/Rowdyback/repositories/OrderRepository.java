@@ -18,6 +18,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.orderDate BETWEEN :startDate AND :endDate")
     List<Order> findBetweenDates(LocalDateTime startDate, LocalDateTime endDate);
 
+    List<Order> findByUserId(Long userId);
     //TODO: additional queries
 }
 
