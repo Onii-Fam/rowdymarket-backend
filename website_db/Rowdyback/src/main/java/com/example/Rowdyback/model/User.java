@@ -1,5 +1,9 @@
 package com.example.Rowdyback.model;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Users")
@@ -7,11 +11,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
+    @NotBlank(message = "Username cannot be empty")
+    @Size(min = 5, max = 50, message = "Username must be between 5 and 50 characters long")
     private String username;
+
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
+
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email should be valid")
     private String email;
-    private String address;
-    private String phoneNumber;
+
+    private String address; // Optional: add @NotBlank if required
+
+    private String phoneNumber; // Optional: add validation as necessary
 
     public User() {}
 
@@ -22,8 +37,7 @@ public class User {
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
-
-    // Getters
+// Getters
     public Long getUserId() { return userId; }
     public String getUsername() { return username; }
     public String getPassword() { return password; }

@@ -15,27 +15,30 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     public User registerUser(User user) {
-        String encryptedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encryptedPassword);
+
         return userRepository.save(user);
     }
 
     public User updateUser(Long userId, User updatedUser) {
-        return userRepository.findById(userId)
-                .map(user -> {
-                    user.setUsername(updatedUser.getUsername());
-                    user.setEmail(updatedUser.getEmail());
-                    user.setAddress(updatedUser.getAddress());
-                    user.setPhoneNumber(updatedUser.getPhoneNumber());
-                    if (!updatedUser.getPassword().isEmpty()) {
-                        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-                    }
-                    return userRepository.save(user);
-                })
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+        // Find the user by ID
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            // Update user details
+            user.setUsername(updatedUser.getUsername());
+            user.setEmail(updatedUser.getEmail());
+            user.setAddress(updatedUser.getAddress());
+            user.setPhoneNumber(updatedUser.getPhoneNumber());
+            // Update password if provided
+            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+                user.setPassword(updatedUser.getPassword());
+            }
+            // Save and return updated user
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found!");
+        }
     }
 
     public void deleteUser(Long userId) {
@@ -51,6 +54,9 @@ public class UserService {
     }
 
     public Optional<User> findUserByUsername(String username) {
-        return Optional.ofNullable(userRepository.findByUsername(username));
+        return userRepository.findByUsername(username);
     }
+
+
+
 }

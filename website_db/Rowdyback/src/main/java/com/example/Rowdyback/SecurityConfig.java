@@ -13,13 +13,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // CSRF protection is not necessary for stateless APIs
-                .authorizeRequests()
-                .anyRequest().permitAll() // Allow all requests without authentication
+                .csrf().disable() // Disable CSRF protection
+                .authorizeRequests() // Authorize requests
+                .anyRequest().permitAll() // Permit all requests
                 .and()
-                .cors().and()
+                .httpBasic().disable() // Disable HTTP Basic authentication
                 .formLogin().disable() // Disable form login
-                .httpBasic().disable(); // Disable HTTP Basic authentication
+                .logout().disable(); // Disable logout
 
         return http.build();
     }
