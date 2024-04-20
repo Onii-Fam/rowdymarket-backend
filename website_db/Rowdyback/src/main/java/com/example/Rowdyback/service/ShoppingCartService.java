@@ -29,7 +29,7 @@ public class ShoppingCartService {
     }
 
     // Method to add an item to the cart
-    public ShoppingCart addItemToCart(Long userId, Long itemId, int quantity) {
+    public ShoppingCart addItemToCart(Long userId, Long itemId, int quantity, int discountPercent) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         Item item = itemRepository.findById(itemId)
@@ -38,7 +38,7 @@ public class ShoppingCartService {
         ShoppingCart cart = shoppingCartRepository.findByUserUserId(userId)
                 .orElse(new ShoppingCart(user));
 
-        cart.addItem(item, quantity); // Handling item adding logic internally
+        cart.addItem(item, quantity, discountPercent); // Handling item adding logic internally
 
         cart.setTotalAmount(calculateCartTotal(cart));
         return shoppingCartRepository.save(cart);
@@ -87,7 +87,13 @@ public class ShoppingCartService {
         Map<Long, CartItem> items = cart.getCartItems();
 
         for (CartItem item : items.values()) {
-            totalPrice += item.getItem().getPrice() * item.getQuantity();
+            if((item.getDiscountPercent() > 0) &&
+                    (item.getDiscountPercent() < 100)) {
+                totalPrice += (item.getItem().getPrice() * (item.getDiscountPercent()/100)) * item.getQuantity();
+            }
+            else {
+                totalPrice += item.getItem().getPrice() * item.getQuantity();
+            }
         }
         return totalPrice*1.0825;
     }

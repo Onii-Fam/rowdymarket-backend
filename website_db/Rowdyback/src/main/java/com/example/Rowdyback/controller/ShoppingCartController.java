@@ -16,8 +16,8 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/add")
-    public ResponseEntity<ShoppingCart> addItemToCart(@RequestParam Long userId, @RequestParam Long itemId, @RequestParam int quantity) {
-        ShoppingCart updatedCart = shoppingCartService.addItemToCart(userId, itemId, quantity);
+    public ResponseEntity<ShoppingCart> addItemToCart(@RequestParam Long userId, @RequestParam Long itemId, @RequestParam int quantity, @RequestParam int discountPercent) {
+        ShoppingCart updatedCart = shoppingCartService.addItemToCart(userId, itemId, quantity, discountPercent);
         return ResponseEntity.ok(updatedCart);
     }
 

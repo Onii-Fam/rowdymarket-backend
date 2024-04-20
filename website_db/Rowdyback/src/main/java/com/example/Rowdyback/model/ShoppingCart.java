@@ -66,9 +66,9 @@ public class ShoppingCart {
             shoppingCart.put(itemId, c);
         }
     }
-    public void addItem(Item item, int quantity)
+    public void addItem(Item item, int quantity, int discountPercent)
     {
-        CartItem c = new CartItem(item,quantity);
+        CartItem c = new CartItem(item,quantity,discountPercent);
 
         CartItem i = shoppingCart.get(item.getItemId());
         if(i == null) {
@@ -94,7 +94,7 @@ public class ShoppingCart {
 
     // Operations
     public void addItem(Item item) {
-        this.addItem(item, 1);
+        this.addItem(item, 1, 0);
     }
 
     public void removeItem(Item item) {
