@@ -97,6 +97,10 @@ public class ShoppingCart {
         this.addItem(item, 1, 0);
     }
 
+    public void addItem(Item item, int quantity) {
+        this.addItem(item, quantity, 0);
+    }
+
     public void removeItem(Item item) {
         this.removeItem(item.getItemId());
     }
