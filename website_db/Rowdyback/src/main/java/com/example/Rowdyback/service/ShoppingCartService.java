@@ -89,7 +89,8 @@ public class ShoppingCartService {
         for (CartItem item : items.values()) {
             if((item.getDiscountPercent() > 0) &&
                     (item.getDiscountPercent() < 100)) {
-                totalPrice += (item.getItem().getPrice() * (item.getDiscountPercent()/100)) * item.getQuantity();
+                double itemValue = (100 - item.getDiscountPercent())/100;
+                totalPrice += (item.getItem().getPrice() * (itemValue)) * item.getQuantity();
             }
             else {
                 totalPrice += item.getItem().getPrice() * item.getQuantity();
