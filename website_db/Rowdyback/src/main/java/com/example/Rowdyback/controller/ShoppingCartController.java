@@ -49,5 +49,21 @@ public class ShoppingCartController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/subtotal/{userId}")
+    public ResponseEntity<Double> getCartSubTotal(@PathVariable Long userId) {
+        Optional<ShoppingCart> cart = shoppingCartService.getCartForUser(userId);
+        return cart.map(shoppingCart -> {
+            Double total = shoppingCartService.calculateCartSubTotal(shoppingCart);
+            return ResponseEntity.ok(total);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @GetMapping("/tax/{userId}")
+    public ResponseEntity<Double> getCartTax(@PathVariable Long userId) {
+        Optional<ShoppingCart> cart = shoppingCartService.getCartForUser(userId);
+        return cart.map(shoppingCart -> {
+            Double total = shoppingCartService.calculateCartTax(shoppingCart);
+            return ResponseEntity.ok(total);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
 }

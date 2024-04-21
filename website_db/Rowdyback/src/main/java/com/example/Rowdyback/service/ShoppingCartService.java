@@ -100,4 +100,36 @@ public class ShoppingCartService {
     }
 
     // Add other necessary methods and logic as required.
+    public Double calculateCartSubTotal(ShoppingCart cart) {
+        Double totalPrice = 0.0;
+        Map<Long, CartItem> items = cart.getCartItems();
+
+        for (CartItem item : items.values()) {
+            if((item.getDiscountPercent() > 0) &&
+                    (item.getDiscountPercent() < 100)) {
+                double itemValue = (100 - item.getDiscountPercent())/100;
+                totalPrice += (item.getItem().getPrice() * (itemValue)) * item.getQuantity();
+            }
+            else {
+                totalPrice += item.getItem().getPrice() * item.getQuantity();
+            }
+        }
+        return totalPrice;
+    }
+    public Double calculateCartTax(ShoppingCart cart) {
+        Double totalPrice = 0.0;
+        Map<Long, CartItem> items = cart.getCartItems();
+
+        for (CartItem item : items.values()) {
+            if((item.getDiscountPercent() > 0) &&
+                    (item.getDiscountPercent() < 100)) {
+                double itemValue = (100 - item.getDiscountPercent())/100;
+                totalPrice += (item.getItem().getPrice() * (itemValue)) * item.getQuantity();
+            }
+            else {
+                totalPrice += item.getItem().getPrice() * item.getQuantity();
+            }
+        }
+        return totalPrice*0.0825;
+    }
 }
