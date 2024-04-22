@@ -113,14 +113,6 @@
 
 ## Shopping Cart Management
 
-Here is the updated API documentation for the shopping cart management:
-
----
-
-## Shopping Cart API
-
-### **Endpoints Overview**
-
 **Add Item to Cart**
    - `POST /api/Cart/add`
    - Adds a specified item and quantity to the user's shopping cart and applies a discount if provided.
