@@ -51,7 +51,6 @@ public class ItemService {
         return false;
     }
 
-    // Implement the sorting methods assuming the naming convention is followed in the ItemRepository
     public List<Item> getAllItemsSorted(boolean asc) {
         Sort sort = asc ? Sort.by("price").ascending() : Sort.by("price").descending();
         return itemRepository.findAll(sort);
