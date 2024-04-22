@@ -121,7 +121,7 @@ Here is the updated API documentation for the shopping cart management:
 
 ### **Endpoints Overview**
 
-1. **Add Item to Cart**
+**Add Item to Cart**
    - `POST /api/Cart/add`
    - Adds a specified item and quantity to the user's shopping cart and applies a discount if provided.
    - **Query Parameters**:
@@ -132,7 +132,7 @@ Here is the updated API documentation for the shopping cart management:
    - **Success Response**: 200 OK with updated shopping cart details.
    - **Error Response**: 500 Internal Server Error if the user or item is not found.
 
-2. **Remove Item from Cart**
+**Remove Item from Cart**
    - `POST /api/Cart/remove`
    - Removes a specified item from the user's shopping cart.
    - **Query Parameters**:
@@ -141,7 +141,7 @@ Here is the updated API documentation for the shopping cart management:
    - **Success Response**: 200 OK with updated shopping cart details.
    - **Error Response**: 500 Internal Server Error if the cart is not found.
 
-3. **Get Cart for User**
+**Get Cart for User**
    - `GET /api/Cart/{userId}`
    - Retrieves the shopping cart details for a specified user.
    - **Path Variables**:
@@ -149,7 +149,7 @@ Here is the updated API documentation for the shopping cart management:
    - **Success Response**: 200 OK with cart details.
    - **No Data Response**: 404 Not Found if no cart exists for the user.
 
-4. **Clear Cart**
+**Clear Cart**
    - `POST /api/Cart/clear`
    - Clears all items from the user's shopping cart.
    - **Query Parameters**:
@@ -157,7 +157,7 @@ Here is the updated API documentation for the shopping cart management:
    - **Success Response**: 200 OK with a confirmation that the cart has been cleared.
    - **Error Response**: 500 Internal Server Error if the cart is not found.
 
-5. **Get Cart Total**
+**Get Cart Total**
    - `GET /api/Cart/total/{userId}`
    - Retrieves the total cost of the cart including tax for a specified user.
    - **Path Variables**:
@@ -165,7 +165,7 @@ Here is the updated API documentation for the shopping cart management:
    - **Success Response**: 200 OK with total cost.
    - **No Data Response**: 404 Not Found if no cart exists for the user.
 
-6. **Get Cart Subtotal**
+**Get Cart Subtotal**
    - `GET /api/Cart/subtotal/{userId}`
    - Retrieves the subtotal of the cart before tax for a specified user.
    - **Path Variables**:
@@ -173,7 +173,7 @@ Here is the updated API documentation for the shopping cart management:
    - **Success Response**: 200 OK with subtotal amount.
    - **No Data Response**: 404 Not Found if no cart exists for the user.
 
-7. **Get Cart Tax**
+**Get Cart Tax**
    - `GET /api/Cart/tax/{userId}`
    - Retrieves the tax amount for the cart of a specified user.
    - **Path Variables**:
@@ -205,14 +205,14 @@ Here is the updated API documentation for order management, including sorting op
 
 ### **Endpoints Overview**
 
-1. **Create Order**
+**Create Order**
    - `POST /api/Orders`
    - Creates a new order based on the provided order details.
    - **Request Body**: JSON object representing the new order.
    - **Success Response**: 200 OK with order details.
    - **Error Response**: 400 Bad Request if data is invalid.
 
-2. **Get Order By ID**
+**Get Order By ID**
    - `GET /api/Orders/{id}`
    - Retrieves detailed information about an order by its ID.
    - **Path Variables**:
@@ -220,7 +220,7 @@ Here is the updated API documentation for order management, including sorting op
    - **Success Response**: 200 OK with order details.
    - **Error Response**: 404 Not Found if the order does not exist.
 
-3. **Get All Orders**
+**Get All Orders**
    - `GET /api/Orders`
    - Retrieves all orders, optionally sorted by a specified field.
    - **Query Parameters**:
@@ -228,7 +228,7 @@ Here is the updated API documentation for order management, including sorting op
    - **Success Response**: 200 OK with a list of orders.
    - **No Data Response**: 204 No Content if no orders exist.
 
-4. **Update Order**
+**Update Order**
    - `PUT /api/Orders/{id}`
    - Updates the specified fields of an order.
    - **Path Variables**:
@@ -237,7 +237,7 @@ Here is the updated API documentation for order management, including sorting op
    - **Success Response**: 200 OK with updated order details.
    - **Error Response**: 404 Not Found if the order does not exist.
 
-5. **Cancel Order**
+**Cancel Order**
    - `DELETE /api/Orders/{id}`
    - Cancels an existing order.
    - **Path Variables**:
@@ -245,7 +245,7 @@ Here is the updated API documentation for order management, including sorting op
    - **Success Response**: 200 OK.
    - **Error Response**: 404 Not Found if the order does not exist.
 
-6. **Get Orders by User ID**
+**Get Orders by User ID**
    - `GET /api/Orders/user/{userId}`
    - Retrieves all orders placed by a specific user.
    - **Path Variables**:
