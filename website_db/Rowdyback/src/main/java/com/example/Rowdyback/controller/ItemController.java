@@ -13,15 +13,13 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
-
-    // Constructor injection instead of field injection
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
 
     @PostMapping
-    public ResponseEntity<Item> addItem(@RequestBody Item item) {
-        Item newItem = itemService.addItem(item);
+    public ResponseEntity<Item> addItem(@RequestBody Item item, @RequestParam Long userId) {
+        Item newItem = itemService.addItem(item, userId);
         return ResponseEntity.ok(newItem);
     }
 

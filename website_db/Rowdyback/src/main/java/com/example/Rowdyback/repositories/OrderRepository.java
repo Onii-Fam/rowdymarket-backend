@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    // Correct method to find orders by user's ID
     List<Order> findByUserUserId(Long userId);  // Adjusted to match the entity mapping
 
     List<Order> findByOrderStatus(String status);

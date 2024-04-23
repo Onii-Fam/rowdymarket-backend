@@ -1,7 +1,9 @@
 package com.example.Rowdyback.service;
 
 import com.example.Rowdyback.model.Item;
+import com.example.Rowdyback.model.User;
 import com.example.Rowdyback.repositories.ItemRepository;
+import com.example.Rowdyback.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,17 @@ import java.util.Optional;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository) {
+    public ItemService(ItemRepository itemRepository, UserRepository userRepository) {
         this.itemRepository = itemRepository;
+        this.userRepository = userRepository;
     }
 
-    public Item addItem(Item item) {
+    public Item addItem(Item item, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        item.setUser(user);
         return itemRepository.save(item);
     }
 
@@ -67,6 +73,8 @@ public class ItemService {
     public List<Item> searchItemsByString(String search) {
         return itemRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(search, search);
     }
+
+
 }
 
 

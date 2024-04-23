@@ -1,6 +1,7 @@
 package com.example.Rowdyback.repositories;
 
 import com.example.Rowdyback.model.Item;
+import com.example.Rowdyback.model.User;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,4 +28,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findAllItemsSorted(Sort sort);
 
     List<Item> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description);
+
+    List<Item> findByUser(User user); // Find items by user
+    List<Item> findByUserUserId(Long userId);
+
 }

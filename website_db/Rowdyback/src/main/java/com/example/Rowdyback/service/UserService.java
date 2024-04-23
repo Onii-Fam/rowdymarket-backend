@@ -50,6 +50,9 @@ public class UserService {
     }
 
     public Optional<User> findUserById(Long userId) {
+        if (userId == null || userId == 0) {
+            return Optional.empty(); // Avoid querying for invalid IDs
+        }
         return userRepository.findById(userId);
     }
 
