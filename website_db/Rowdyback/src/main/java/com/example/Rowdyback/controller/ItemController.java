@@ -31,12 +31,11 @@ public class ItemController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Item>> getAllItems(@RequestParam(required = false, defaultValue = "none") String sort) {
+    public ResponseEntity<List<Item>> getAllItems(@RequestParam(required = false) String sort,
+                                                  @RequestParam(required = false, defaultValue = "asc") String direction) {
         List<Item> items;
-        if ("asc".equalsIgnoreCase(sort)) {
-            items = itemService.getAllItemsSorted(true);
-        } else if ("desc".equalsIgnoreCase(sort)) {
-            items = itemService.getAllItemsSorted(false);
+        if (sort != null && !sort.isEmpty()) {
+            items = itemService.getAllItemsSorted(sort, direction);
         } else {
             items = itemService.findAllItems();
         }

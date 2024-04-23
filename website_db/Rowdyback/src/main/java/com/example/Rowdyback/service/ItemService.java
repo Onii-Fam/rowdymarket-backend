@@ -62,6 +62,11 @@ public class ItemService {
         return itemRepository.findAll(sort);
     }
 
+    public List<Item> getAllItemsSorted(String field, String direction) {
+        Sort sort = "asc".equalsIgnoreCase(direction) ? Sort.by(field).ascending() : Sort.by(field).descending();
+        return itemRepository.findAll(sort);
+    }
+
     public List<Item> getItemsSortedByPriceAsc() {
         return itemRepository.findAll(Sort.by("price").ascending());
     }
