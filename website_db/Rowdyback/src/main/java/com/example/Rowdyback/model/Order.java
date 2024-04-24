@@ -11,7 +11,7 @@ public class Order {
     private Long orderId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")  // Explicitly defining the column name for clarity
+    @JoinColumn(name = "user_id", nullable = false)  // Explicitly defining the column name for clarity
     private User user;
 
     private LocalDateTime orderDate;

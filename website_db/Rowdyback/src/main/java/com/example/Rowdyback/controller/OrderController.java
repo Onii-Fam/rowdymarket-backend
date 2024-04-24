@@ -1,6 +1,8 @@
 package com.example.Rowdyback.controller;
 
 import com.example.Rowdyback.model.Order;
+import com.example.Rowdyback.model.User;
+import com.example.Rowdyback.repositories.UserRepository;
 import com.example.Rowdyback.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +17,23 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, UserRepository userRepository) {
         this.orderService = orderService;
+        this.userRepository = userRepository;
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+    public ResponseEntity<Order> createOrder(@RequestBody Order order, @RequestParam Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+        order.setUser(user);
         Order newOrder = orderService.createOrder(order);
         return ResponseEntity.ok(newOrder);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
