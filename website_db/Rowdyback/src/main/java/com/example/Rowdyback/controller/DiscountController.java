@@ -5,6 +5,8 @@ import com.example.Rowdyback.service.DiscountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/discounts")
 public class DiscountController {
@@ -36,5 +38,12 @@ public class DiscountController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping
+    public ResponseEntity<List<Discount>> getAllDiscounts() {
+        List<Discount> discounts = discountService.findAllDiscounts();  // Assuming this method exists in your service
+        return ResponseEntity.ok(discounts);
+    }
+
 
 }

@@ -5,6 +5,7 @@ import com.example.Rowdyback.repositories.DiscountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +33,9 @@ public class DiscountService {
             return true;
         }
         return false;
+    }
+    public List<Discount> findAllDiscounts() {
+        return discountRepository.findAll();  // Uses JpaRepository's findAll method
     }
 
 
