@@ -15,31 +15,28 @@ public class ShoppingCart {
 
     @ElementCollection
     @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
-    @Column(name = "item_id")
-    private Set<Long> itemIds = new HashSet<>();
+    @MapKeyColumn(name = "item_id")
+    @Column(name = "quantity")
+    private Map<Long, Integer> items = new HashMap<>();  // This map stores item IDs and their quantities
 
     private Double totalAmount;
     private Double taxAmount;
     private String discountCode;
 
-    private HashMap<Long, CartItem> shoppingCart;
-
-    public ShoppingCart() {shoppingCart = new HashMap<>();}
+    public ShoppingCart() {}
 
     public ShoppingCart(User user, Double totalAmount, String discountCode) {
         this.user = user;
         this.totalAmount = totalAmount;
-        this.taxAmount = 0.0825;
+        this.taxAmount = 0.0825; // Tax rate could be set externally
         this.discountCode = discountCode;
-        shoppingCart = new HashMap<>();
     }
 
     public ShoppingCart(User user) {
         this.user = user;
-        this.totalAmount = 1.0;
+        this.totalAmount = 0.0;
         this.taxAmount = 0.0;
         this.discountCode = "";
-        shoppingCart = new HashMap<>();
     }
 
     // Getters
@@ -48,7 +45,7 @@ public class ShoppingCart {
     public Double getTotalAmount() { return totalAmount; }
     public Double getTaxAmount() { return taxAmount; }
     public String getDiscountCode() { return discountCode; }
-    public Set<Long> getItemIds() { return itemIds; }
+    public Map<Long, Integer> getItems() { return items; }
 
     // Setters
     public void setCartId(Long cartId) { this.cartId = cartId; }
@@ -56,63 +53,25 @@ public class ShoppingCart {
     public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
     public void setTaxAmount(Double taxAmount) { this.taxAmount = taxAmount; }
     public void setDiscountCode(String discountCode) { this.discountCode = discountCode; }
-    public void setItemIds(Set<Long> itemIds) { this.itemIds = itemIds; }
+    public void setItems(Map<Long, Integer> items) { this.items = items; }
 
-    public void updateItemQuantity(Long itemId, int quantity) {
-        CartItem c = shoppingCart.get(itemId);
-        if(c != null) {
-            int q = c.getQuantity();
-            c.setQuantity(q + quantity);
-            shoppingCart.put(itemId, c);
-        }
-    }
-    public void addItem(Item item, int quantity, int discountPercent)
-    {
-        CartItem c = new CartItem(item,quantity,discountPercent);
-
-        CartItem i = shoppingCart.get(item.getItemId());
-        if(i == null) {
-            shoppingCart.put(c.getItem().getItemId(), c);
-        }
-        else {
-            updateItemQuantity(item.getItemId(), quantity);
-        }
+    // Methods to manage cart items
+    public void addItem(Long itemId, int quantity) {
+        items.put(itemId, items.getOrDefault(itemId, 0) + quantity);
     }
 
     public void removeItem(Long itemId) {
-        CartItem i = shoppingCart.get(itemId);
-        if (i != null) {
-            if (i.getQuantity() == 1) {
-                shoppingCart.remove(itemId);
+        if (items.containsKey(itemId)) {
+            int newQuantity = items.get(itemId) - 1;
+            if (newQuantity > 0) {
+                items.put(itemId, newQuantity);
             } else {
-                if (i.getQuantity() > 1) {
-                    updateItemQuantity(itemId, -1);
-                }
+                items.remove(itemId);
             }
         }
     }
 
-    // Operations
-    public void addItem(Item item) {
-        this.addItem(item, 1, 0);
-    }
-
-    public void addItem(Item item, int quantity) {
-        this.addItem(item, quantity, 0);
-    }
-
-    public void removeItem(Item item) {
-        this.removeItem(item.getItemId());
-    }
-
-    public Map<Long, CartItem> getCartItems() {
-        return shoppingCart;
-    }
-    public CartItem getCartItem(Long itemId) {
-        return shoppingCart.get(itemId);
-    }
-
     public void clearItems() {
-        shoppingCart.clear();
+        items.clear();
     }
 }

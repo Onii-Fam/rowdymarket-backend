@@ -1,4 +1,4 @@
-package com.example.Rowdyback.model;
+/*package com.example.Rowdyback.model;
 public class CartItem {
     private Item item;
     private int quantity;
@@ -33,3 +33,4 @@ public class CartItem {
         this.discountPercent = discountPercent;
     }
 }
+*/

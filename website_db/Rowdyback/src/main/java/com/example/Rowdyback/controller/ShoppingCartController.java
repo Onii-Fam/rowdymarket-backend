@@ -1,11 +1,15 @@
 package com.example.Rowdyback.controller;
 
+import com.example.Rowdyback.model.Item;
 import com.example.Rowdyback.model.ShoppingCart;
+import com.example.Rowdyback.controller.AddItemRequest;
+import com.example.Rowdyback.repositories.ItemRepository;
 import com.example.Rowdyback.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -14,10 +18,15 @@ public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
+    private ItemRepository itemRepository;
 
     @PostMapping("/add")
-    public ResponseEntity<ShoppingCart> addItemToCart(@RequestParam Long userId, @RequestParam Long itemId, @RequestParam int quantity, @RequestParam int discountPercent) {
-        ShoppingCart updatedCart = shoppingCartService.addItemToCart(userId, itemId, quantity, discountPercent);
+    public ResponseEntity<ShoppingCart> addItemToCart(@RequestBody AddItemRequest addItemRequest) {
+        ShoppingCart updatedCart = shoppingCartService.addItemToCart(
+                addItemRequest.getUserId(),
+                addItemRequest.getItemId(),
+                addItemRequest.getQuantity() // Removed the discount parameter
+        );
         return ResponseEntity.ok(updatedCart);
     }
 
@@ -49,21 +58,25 @@ public class ShoppingCartController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/subtotal/{userId}")
-    public ResponseEntity<Double> getCartSubTotal(@PathVariable Long userId) {
-        Optional<ShoppingCart> cart = shoppingCartService.getCartForUser(userId);
-        return cart.map(shoppingCart -> {
-            Double total = shoppingCartService.calculateCartSubTotal(shoppingCart);
-            return ResponseEntity.ok(total);
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+    //
+    // Method to calculate the subtotal of the cart
+    public Double calculateCartSubTotal(ShoppingCart cart) {
+        double subtotal = 0.0;
+        for (Map.Entry<Long, Integer> entry : cart.getItems().entrySet()) {
+            var item = itemRepository.findById(entry.getKey());
+            if (item.isPresent()) {
+                subtotal += item.get().getPrice() * entry.getValue();
+            }
+        }
+        return subtotal;
     }
-    @GetMapping("/tax/{userId}")
-    public ResponseEntity<Double> getCartTax(@PathVariable Long userId) {
-        Optional<ShoppingCart> cart = shoppingCartService.getCartForUser(userId);
-        return cart.map(shoppingCart -> {
-            Double total = shoppingCartService.calculateCartTax(shoppingCart);
-            return ResponseEntity.ok(total);
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+
+    // Method to calculate the tax amount of the cart
+    public Double calculateCartTax(ShoppingCart cart) {
+        double subtotal = calculateCartSubTotal(cart);
+        return subtotal * 0.0825; // Assuming 8.25% tax rate
     }
 
 }
+
+
