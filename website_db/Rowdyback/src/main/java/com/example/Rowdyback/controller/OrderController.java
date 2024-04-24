@@ -48,19 +48,12 @@ public class OrderController {
     public ResponseEntity<List<Order>> getAllOrders(@RequestParam(required = false) String sortBy) {
         Sort sort = Sort.unsorted();
         if (sortBy != null) {
-            switch (sortBy.toLowerCase()) {
-                case "price_asc":
-                    sort = Sort.by("price").ascending();
-                    break;
-                case "price_desc":
-                    sort = Sort.by("price").descending();
-                    break;
-                case "username":
-                    sort = Sort.by("user.username"); // Assuming there is a 'username' field in a related User entity
-                    break;
-                case "date":
-                    sort = Sort.by("orderDate").ascending();
-                    break;
+            try {
+                Sort.Order sortOrder = new Sort.Order(Sort.Direction.ASC, sortBy);
+                sort = Sort.by(sortOrder);
+            } catch (IllegalArgumentException e) {
+                // Log the exception and potentially notify the caller via a different HTTP status code
+                return ResponseEntity.badRequest().body(null);
             }
         }
         List<Order> orders = orderService.findAllOrders(sort);
