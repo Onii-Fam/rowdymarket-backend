@@ -24,13 +24,12 @@ public class OrderService {
     // Create a new order with initial setup logic
     @Transactional
     public Order createOrder(Order order) {
-        if (order.getUser() == null) {
-            throw new IllegalStateException("User must be set before creating an order");
+        if (order.getUserId() == null) {
+            throw new IllegalStateException("User ID must be set before creating an order");
         }
-        order.setOrderStatus("Pending"); // Default status
+        order.setOrderStatus("Pending");  // Default status
         return orderRepository.save(order);
     }
-
 
     // Retrieve an order by ID
     public Optional<Order> findOrderById(Long orderId) {

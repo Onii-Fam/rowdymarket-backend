@@ -10,7 +10,8 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findByUserUserId(Long userId);  // Adjusted to match the entity mapping
+    List<Order> findByUserId(Long userId);
+
 
     List<Order> findByOrderStatus(String status);
 
@@ -18,13 +19,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findBetweenDates(LocalDateTime startDate, LocalDateTime endDate);
 
     //TODO: additional queries
-    @Query("SELECT o FROM Order o WHERE o.user.userId = :userId")
-    List<Order> findByUserId(Long userId);
 
-    @Query("SELECT o FROM Order o WHERE o.user.userId = :userId ORDER BY o.orderDate DESC")
+
+
+    @Query("SELECT o FROM Order o WHERE o.userId = :userId ORDER BY o.orderDate DESC")
     List<Order> findByUserIdDesc(Long userId);
 
-    @Query("SELECT o FROM Order o WHERE o.user.userId = :userId ORDER BY o.orderDate ASC")
+    @Query("SELECT o FROM Order o WHERE o.userId = :userId ORDER BY o.orderDate ASC")
     List<Order> findByUserIdAsc(Long userId);
 
 

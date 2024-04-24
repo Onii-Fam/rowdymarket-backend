@@ -26,13 +26,15 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order order, @RequestParam Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
-        order.setUser(user);
-        Order newOrder = orderService.createOrder(order);
-        return ResponseEntity.ok(newOrder);
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        if (userRepository.existsById(order.getUserId())) {
+            Order newOrder = orderService.createOrder(order);
+            return ResponseEntity.ok(newOrder);
+        } else {
+            throw new RuntimeException("User not found with id: " + order.getUserId());
+        }
     }
+
 
 
     @GetMapping("/{id}")

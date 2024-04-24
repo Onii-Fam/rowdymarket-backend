@@ -1,5 +1,6 @@
 package com.example.Rowdyback.model;
 
+import com.example.Rowdyback.model.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -10,9 +11,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)  // Explicitly defining the column name for clarity
-    private User user;
+    @Column(name = "user_id", nullable = false)  // Explicitly defining the column name for clarity
+    private Long userId;
 
     private LocalDateTime orderDate;
     private Double totalAmount;
@@ -23,7 +23,7 @@ public class Order {
 public Order() {}
 
     public Order(User user, LocalDateTime orderDate, Double totalAmount, Double taxAmount, String discountCode, String orderStatus) {
-        this.user = user;
+        this.userId = userId;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
         this.taxAmount = taxAmount;
@@ -33,7 +33,7 @@ public Order() {}
 
     // Getters
     public Long getOrderId() { return orderId; }
-    public User getUser() { return user; }
+    public Long getUserId() { return userId; }
     public LocalDateTime getOrderDate() { return orderDate; }
     public Double getTotalAmount() { return totalAmount; }
     public Double getTaxAmount() { return taxAmount; }
@@ -42,7 +42,6 @@ public Order() {}
 
     // Setters
     public void setOrderId(Long orderId) { this.orderId = orderId; }
-    public void setUser(User user) { this.user = user; }
     public void setOrderDate(LocalDateTime orderDate) { this.orderDate = orderDate; }
     public void setTotalAmount(Double totalAmount) { this.totalAmount = totalAmount; }
     public void setTaxAmount(Double taxAmount) { this.taxAmount = taxAmount; }
